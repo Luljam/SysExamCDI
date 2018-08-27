@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/principal.xhtml">
+	<ui:define name="corpo">
+
+		<div class="container">
+			<div>
+				<h2 class="mb"><i class="fa fa-angle-right"></i> Cadastro Grupo de Exames</h2>
+			</div>
+			<!-- container -->
+
+			<div class="row mt">
+				<div class="col-lg-12">
+					<div class="form-panel">
+						<h4 class="mb">
+							<i class="fa fa-angle-right"></i> Informações do Grupo de Exames
+						</h4>
+
+						<!-- conteúdo início -->
+
+						<h:form id="cadastro" class="form-horizontal style-form">
+							<h:messages />
+							<h:inputHidden value="#{grupoExameBean.grupoExame.codigo}" />
+							<h:inputHidden value="#{grupoExameBean.destinoSalvar}" />
+
+							<div class="form-group">
+								<h:outputLabel value="Descrição" for="nome"
+									class="col-sm-2 col-sm-2 control-label" />
+								<div class="col-sm-10">
+									<p:inputText id="nome" label="Descrição"
+										value="#{grupoExameBean.grupoExame.descricao}" size="50" maxlength="30"
+										required="true" requiredMessage="Informe o nome para o Grupo de Exames!">
+										<f:validateLength minimum="10" maximum="30" />
+									</p:inputText>
+								</div>
+							</div>
+							<p:commandButton action="#{grupoExameBean.salvar}"  value="Salvar" styleClass="ui-priority-primary" />
+						</h:form>
+						<!-- conteúdo fim -->
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

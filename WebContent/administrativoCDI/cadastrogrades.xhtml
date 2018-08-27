@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/principal.xhtml">
+	<ui:define name="corpo">
+		<div class="container">
+			<div>
+				<h2 class="mb">
+					<i class="fa fa-angle-right"></i> Grades
+				</h2>
+			</div>
+
+			<div class="row mt">
+				<div class="col-lg-12">
+					<p:growl id="mensagem" />
+					<div class="form-panel">
+						<h:form id="formCadastro" styleClass="form-horizontal">
+							<fieldset>
+
+								<legend>Detalhes da Agenda</legend>
+								<div class="form-group">
+									<p:outputLabel value="Tipo de atendimento: " for="tipo"
+										styleClass="control-label col-sm-2" />
+									<div class="col-sm-10">
+										<p:selectOneMenu id="tipo" required="true"
+											value="#{gradeBean.grade.tipo}"
+											converter="omnifaces.SelectItemsConverter"
+											requiredMessage="Obrigatório selecionar um tipo!">
+											<f:selectItem noSelectionOption="true"
+												itemLabel="Selecione o tipo ..." />
+											<f:selectItem itemValue="1" itemLabel="Exame" />
+											<f:selectItem itemValue="2" itemLabel="Consulta" />
+											<f:selectItem itemValue="3" itemLabel="Cirurgia" />
+											<f:selectItem itemValue="4" itemLabel="Procedimento" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<p:outputLabel for="s" value="Status da Agenda: "
+										styleClass="control-label col-sm-2" />
+									<div class="col-sm-10">
+										<p:selectOneMenu id="s" required="true"
+											converter="omnifaces.SelectItemsConverter"
+											requiredMessage="Obrigatório selecionar um Status!">
+											<f:selectItem noSelectionOption="true"
+												itemLabel="Selecione o tipo ..." />
+											<f:selectItem itemValue="1" itemLabel="Livre" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<p:outputLabel value="Agenda de Exame: " for="grup"
+										styleClass="control-label col-sm-2" />
+									<div class="col-sm-10">
+										<p:selectOneMenu id="grup" filter="true"
+											value="#{gradeBean.grade.grupo}"
+											converter="omnifaces.SelectItemsConverter" required="true"
+											requiredMessage="Obrigatório selecionar o grupo do Exame!">
+											<f:selectItem noSelectionOption="true" itemValue="0"
+												itemLabel="Selecione um Grupo..." />
+											<f:selectItems value="#{gradeBean.grupos}" var="grupo"
+												itemValue="#{grupo}" itemLabel="#{grupo.descricao}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<p:outputLabel value="Profissional: " for="prof"
+										styleClass="control-label col-sm-2" />
+									<div class="col-sm-10">
+										<p:selectOneMenu id="prof" filter="true"
+											value="#{gradeBean.grade.profissional}"
+											converter="omnifaces.SelectItemsConverter" required="true"
+											requiredMessage="Obrigatório selecionar um Profissional!">
+											<f:selectItem noSelectionOption="true"
+												itemLabel="Selecione um Profissional" />
+											<f:selectItems value="#{gradeBean.profissionais}"
+												var="profissional" itemValue="#{profissional}"
+												itemLabel="#{profissional.nome}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<p:outputLabel value="Início da Agenda de " for="dateIni"
+										styleClass="control-label col-sm-2" />
+									<div class="col-sm-10">
+										<p:row>
+											<p:inputMask id="dateIni" mask="99/99/9999 99:99"
+												required="true"
+												requiredMessage="Obrigatório inserir data e hora de inicio da agenda!"
+												value="#{gradeBean.dt_inicio_agenda}" style="width: 130px">
+												<f:convertDateTime locale="pt,BR" dateStyle="long"
+													pattern="dd/MM/yyyy HH:mm" />
+											</p:inputMask>
+											<p:spacer width="10" />
+
+											<p:outputLabel value="Até " />
+											<p:spacer width="10" />
+											<p:inputMask mask="99/99/9999" required="true"
+												value="#{gradeBean.dt_fim_agenda}"
+												requiredMessage="Obrigatório inserir data final da agenda"
+												style="width: 80px">
+												<f:convertDateTime locale="pt,BR" dateStyle="long"
+													pattern="dd/MM/yyyy" />
+											</p:inputMask>
+										</p:row>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<p:outputLabel value="Disponibilidade de " for="disp"
+										styleClass="control-label col-sm-2" />
+									<div class="col-sm-10">
+										<p:row>
+											<p:inputText id="disp" style="width: 55px"
+												value="#{gradeBean.num_consultas_periodo}" required="true"
+												requiredMessage="Obrigatório informar quantidade de consultas por período!" />
+											<p:spacer width="10" />
+											<p:outputLabel value="consultas por período." />
+										</p:row>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<p:outputLabel value="Duração média de  " for="durac"
+										styleClass="control-label col-sm-2" />
+									<div class="col-sm-10">
+										<p:row>
+											<p:selectOneMenu id="durac"
+												value="#{gradeBean.duracao_consulta}" style="width: 55px"
+												required="true"
+												requiredMessage="Obrigatório informar duração das consultas!">
+												<f:selectItem itemLabel="10" itemValue="10" />
+												<f:selectItem itemLabel="20" itemValue="20" />
+												<f:selectItem itemLabel="30" itemValue="30" />
+											</p:selectOneMenu>
+											<p:spacer width="10" />
+											<p:outputLabel value="minutos por atendimento." />
+										</p:row>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<p:outputLabel value="Dias da Semana" for="semana"
+										styleClass="control-label col-sm-2" />
+									<div class="col-sm-10">
+										<p:selectManyCheckbox id="semana"
+											value="#{gradeBean.diasdaSemana}" required="true"
+											requiredMessage="Obrigatório marcar dia da semana!"
+											layout="responsive" columns="7">
+											<f:selectItem itemLabel="Domingo" itemValue="0" />
+											<f:selectItem itemLabel="Segunda" itemValue="1" />
+											<f:selectItem itemLabel="Terça" itemValue="2" />
+											<f:selectItem itemLabel="Quarta" itemValue="3" />
+											<f:selectItem itemLabel="Quinta" itemValue="4" />
+											<f:selectItem itemLabel="Sexta" itemValue="5" />
+											<f:selectItem itemLabel="Sábado" itemValue="6" />
+										</p:selectManyCheckbox>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<p:commandButton id="btnGravar" value="Gravar"
+											actionListener="#{gradeBean.salvar}"
+											update=":formCadastro :mensagem" styleClass="btn btn-default" />
+									</div>
+								</div>
+							</fieldset>
+							<p:blockUI block="formCadastro" trigger="btnGravar">
+									Carregando...
+									<br />
+							<p:graphicImage value="/resources/img/ajax-loader.gif" />
+							</p:blockUI>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>
+</html>

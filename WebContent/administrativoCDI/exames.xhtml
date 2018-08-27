@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><ui:insert name="titulo">Exames</ui:insert></title>
+</h:head>
+
+<ui:composition template="/templates/principal.xhtml">
+	<ui:define name="corpo">
+
+		<div class="container">
+			<div>
+				<h2>Grupos e Exames Cadastrados</h2>
+			</div>
+			<!-- container -->
+			<div>
+				<h:form>
+					<h:messages />
+					<h:dataTable value="#{exameBean.exames}" var="exame"
+						rules="rows" cellpadding="5"
+						class="table table-striped table-advance table-hover">
+						<f:facet name="caption">
+						A listagem abaixo exibe a relação dos Exames do sistema. Você poderá realizar a edição e exclusão para os exames.
+						</f:facet>
+						<f:facet name="header"><h:commandButton action="#{exameBean.novo}" value="Registre um novo Exame" /></f:facet>
+						<f:facet name="footer">Final da listagem</f:facet>
+						
+						<h:column>
+							<f:facet name="header">
+								<i class="fa fa-bookmark"></i>Código do Exame</f:facet>
+							<h:outputText value="#{exame.codigo}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header"><i class="fa fa-edit"></i> Exame</f:facet>
+							<h:outputText value="#{exame.descricao}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header"><i class="fa fa-edit"></i> Grupo</f:facet>
+							<h:outputText value="#{exame.grupo.descricao}" />
+						</h:column>
+						<h:column>
+							<h:commandLink action="#{exameBean.editar}">
+								<button class="btn btn-primary btn-xs">
+									<i class="fa fa-pencil"></i>
+								</button>
+								<f:setPropertyActionListener target="#{exameBean.exame}"
+									value="#{exame}" />
+								<f:setPropertyActionListener
+									target="#{exameBean.destinoSalvar}" value="/administrativoCDI/cadastroexames" />
+							</h:commandLink>
+							<!-- </h:column>
+						<h:column> -->
+							<h:commandLink action="#{exameBean.excluir}"
+								onclick="if (!confirm('Confirma a exclusão do Grupo #{grupo.descricao}?')) return false;">
+								<button class="btn btn-danger btn-xs">
+									<i class="fa fa-trash-o "></i>
+								</button>
+								<f:setPropertyActionListener target="#{exameBean.exame}"
+									value="#{exame}" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

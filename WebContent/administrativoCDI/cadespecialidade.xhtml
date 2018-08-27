@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/principal.xhtml">
+	<ui:define name="corpo">
+
+		<div class="container">
+			<div>
+				<h2 class="mb">
+					<i class="fa fa-angle-right"></i> Especialidades
+				</h2>
+			</div>
+
+			<div class="row mt">
+				<div class="col-lg-12">
+					<p:growl id="mensagem" />
+					<div class="form-panel">
+						<h4 class="mb">
+							<i class="fa fa-angle-right"></i> Cadastro de Especialidade
+						</h4>
+						<h:form id="formCadastro">
+							<h:panelGrid id="painel" columns="2">
+								<p:outputLabel for="cod" value="Código:" />
+								<p:inputText id="cod"  maxlength="100" size="80" 
+								value="#{especialidadeBean.especialidade.codigo}" required="true"
+									requiredMessage="Obrigatório informár código da Especialidade" />
+							
+								<p:outputLabel for="desc" value="Especialidade:" />
+								<p:inputText id="desc" maxlength="100" size="80"
+									value="#{especialidadeBean.especialidade.descricao}" required="true"
+									requiredMessage="Obrigatório nome da especialidade">
+								</p:inputText>
+
+								<p:outputLabel for="clin" value="Clínica:" />
+								
+								<p:selectOneMenu id="clin" filter="true"
+									value="#{especialidadeBean.especialidade.clinica}"
+									converter="omnifaces.SelectItemsConverter" required="true"
+									requiredMessage="obrigatório selecionar a Clínica da Especialidade">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="Selecione uma Clínica" />
+									<f:selectItems value="#{especialidadeBean.clinicas}" var="clin"
+										itemValue="#{clin}" itemLabel="#{clin.descricao}" />
+								</p:selectOneMenu>
+
+								<p:outputLabel />
+								<p:commandButton id="gravaBtn" value="Salvar"
+									actionListener="#{especialidadeBean.salvar}"
+									update=":formListagem:tabela :formCadastro :mensagem" />
+							</h:panelGrid>
+							<p:blockUI block="formListagem" trigger="gravaBtn">
+									Carregando...
+									<br />
+								<p:graphicImage value="/resources/img/ajax-loader.gif" />
+							</p:blockUI>
+						</h:form>
+					</div>
+					<div class="form-panel">
+						<h4 class="mb">
+							<i class="fa fa-angle-right"></i> Listagem de Exames
+						</h4>
+						<h:form id="formListagem">
+							<p:dataTable id="tabela"
+								emptyMessage="Nenhum registro encontrado."
+								style="font-size: 15px" value="#{especialidadeBean.especialidades}" var="especs"
+								scrollable="true" scrollHeight="200" widgetVar="especTable"
+								rows="8" paginator="true" resizableColumns="true">
+
+
+								<p:column headerText="Código" filterBy="#{especs.codigo}"
+									sortBy="#{especs.codigo}" style="width: 60%">
+									<h:outputText value="#{especs.codigo}"
+										style="font-size: 12px" />
+								</p:column>
+								
+								<p:column headerText="Descricao" filterBy="#{especs.descricao}"
+									sortBy="#{especs.descricao}" style="width: 60%">
+									<h:outputText value="#{especs.descricao}"
+										style="font-size: 12px" />
+								</p:column>
+
+								<p:column headerText="Clínica" filterBy="#{especs.clinica.descricao}"
+									sortBy="#{especs.clinica.descricao}" style="width: 30%">
+									<h:outputText value="#{especs.clinica.descricao}"
+										style="font-size: 12px" />
+								</p:column>
+
+								<p:column headerText="Opções" style="width: 10%">
+									<h:commandLink action="#{especialidadeBean.excluir}"
+										style="font-size: 12px"
+										onclick="if (!confirm('Confirma a exclusão de Especialidade #{especialidade.descricao}?')) return false;">
+										<button class="btn btn-danger btn-xs">
+											<i class="fa fa-trash-o "></i>
+										</button>
+										<f:setPropertyActionListener target="#{especialidadeBean.clinica}"
+											value="#{clinica}" />
+									</h:commandLink>
+								</p:column>
+
+								<f:facet name="footer">
+									<h:outputText value="Total de " />
+									<h:outputText value="#{especialidadeBean.especialidades.size()}" />
+									<h:outputText value=" especialidades cadastradas. " />
+								</f:facet>
+							</p:dataTable>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

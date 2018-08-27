@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+<ui:composition>
+	<ul class="sidebar-menu" id="nav-accordion">
+		<p class="centered">
+			<a href="#"><h:graphicImage library="img" name="Logo-60-anos.jpg"
+					class="img-retangle" width="210" /></a>
+		</p>
+		<h5 class="centered">Bem vindo</h5>
+		<h5 class="centered">#{contextoBean.usuarioLogado.nome}</h5>
+		<h5 class="centered">#{request.remoteUser}</h5>
+		
+		<li class="mt"><h:link
+				outcome="/publico/principal.xhtml">
+				<i class="fa fa-dashboard"></i>
+				<span>DashBoard</span>
+			</h:link></li>
+
+		<!-- Menu liberado conforme demanda de desenvolvimento 
+
+		<li class="sub-menu"><a href="javascript:;"> <i
+				class="fa fa-hospital-o"></i> <span>Ambulatório</span>
+		</a>
+			<ul class="sub">
+				<li><h:link value="nivel 2"
+						outcome="/publico/centrocirurgico/cirurgias-hora-inicio-maior-fim.xhtml"
+						class="scroll" /></li>
+
+				<li><h:link value="Nível 3"></h:link>
+					<ul class="sub">
+						<li><h:link value="nivel 3" class="scroll" /></li>
+					</ul></li>
+			</ul></li>
+-->
+
+			<li class="sub-menu"><a href="javascript:;"> <i
+				class="fa fa-user-plus"></i> <span>Administração</span>
+		</a>
+			<ul class="sub">
+				<li><h:link value="CDI"></h:link>
+						<ul class="sub">
+							<li><h:link value="Grade de Consultas"
+							outcome="/administrativoCDI/cadastrogrades.xhtml"
+							class="scroll" /></li>
+						</ul>
+					</li>
+				<li><h:link value="Cadastro"></h:link>
+				
+				<ul class="sub">
+						<li><h:link value="Lista de Usuários"
+						outcome="/admin/usuarios.xhtml" 
+						class="scroll" /></li>
+					
+						<li><h:link value="Grupos"
+						outcome="/administrativoCDI/grupoexames.xhtml"
+						 class="scroll" /></li>
+						
+						<li><h:link value="Exames"
+						outcome="/administrativoCDI/cadastroexames.xhtml"
+						class="scroll" /></li>
+						
+						<li><h:link value="Grade de Consultas"
+						outcome="/administrativoCDI/cadastrogrades.xhtml"
+						class="scroll" /></li>
+						
+												
+						<li><h:link value="Conselhos"
+						outcome="/administrativoCDI/cadconselhoclasse.xhtml"
+						class="scroll" /></li>
+						
+						<li><h:link value="Profissionais"
+						outcome="/administrativoCDI/cadprofissional.xhtml"
+						class="scroll" /></li>
+						
+						<li><h:link value="Clínicas"
+						outcome="/administrativoCDI/cadastroclinica.xhtml"
+						class="scroll" /></li>
+						
+						<li><h:link value="Especialidades"
+						outcome="/administrativoCDI/cadespecialidade.xhtml"
+						class="scroll" /></li>
+				</ul></li>
+				
+			</ul>
+		</li>
+
+			<sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
+			<li class="sub-menu"><a href="javascript:;"> <i
+					class="fa fa-users"></i> <span>Administrativo CDI</span>
+			</a>
+				<ul class="sub">
+						<li><h:link value="Marcação"
+						outcome="/publico/agendamento.xhtml"
+						class="scroll" /></li>
+												
+						<li><h:link value="Confirmação"
+						outcome="/administrativoCDI/confimaconsulta.xhtml"
+						class="scroll" /></li>
+						
+				</ul></li>
+				
+		</sec:ifAnyGranted>
+		
+		
+		<li class="sub-menu"><a href="javascript:;"> <i
+				class="fa fa-pie-chart"></i> <span>Graficos</span>
+		</a>
+			<ul class="sub">
+
+				<li><h:link value="Cirurgias por Porte"
+						outcome=""
+						class="scroll">
+					</h:link></li>
+			</ul>
+		</li>
+		
+		
+	</ul>
+</ui:composition>
+</html>

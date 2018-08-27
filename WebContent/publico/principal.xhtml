@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet library="css" name="normalize.min.css" />
+	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputStylesheet library="css" name="style1.css" />
+	<h:outputStylesheet library="lineicons" name="style.css" />
+	
+
+	<title><ui:insert name="titulo">CDIHSPM - Centro de Diagnóstico por Imagem</ui:insert></title>
+</h:head>
+
+<ui:composition template="/templates/principal.xhtml">
+	<ui:define name="corpo">
+		<div class="form-panel" style="text-align: center">
+			<div class="text-center">
+			<h1>
+				HOSPITAL DO SERVIDOR PÚBLICO MUNICIPAL
+			</h1>
+		</div>
+		<hr />
+			<div>
+				<h2>CDIHSPM - Centro de Diagnóstico por Imagem</h2>
+			</div>
+			<!-- container -->
+			<div class="container">
+				<div class="welcome-info">
+					<h3>Bem Vindo</h3>
+					<h4 class="caption">Sistema de Agendamento de Exames</h4>
+					<p style="font-size: medium;">O Hospital do Servidor Público
+						Municipal é uma entidade pública, autárquica, vinculada à
+						Secretaria Municipal de Saúde e mantida integralmente pela
+						Prefeitura do Município de São Paulo.</p>
+				</div>
+			</div>
+			<!-- //container -->
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

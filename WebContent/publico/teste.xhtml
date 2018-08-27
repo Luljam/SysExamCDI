@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/principal.xhtml">
+	<ui:define name="corpo">
+
+		<div class="container">
+			<div>
+				<h2 class="mb">
+					<i class="fa fa-angle-right"></i> Grade
+				</h2>
+			</div>
+
+			<div class="row mt">
+				<div class="col-lg-12">
+					<p:growl id="mensagem" />
+					<div class="form-panel">
+						<h4 class="mb">
+							<i class="fa fa-angle-right"></i> Agenda
+						</h4>
+						<h:form id="formCadastro" styleClass="form-horizontal">
+							<div class="form-group">
+								<p:outputLabel value="Grupo de Exames:"
+									styleClass="control-label col-sm-2" />
+								<div class="col-sm-10">
+									<p:selectOneMenu id="grup1" filter="true"
+										value="#{confirmacaoBean.codGrupo}"
+										converter="omnifaces.SelectItemsConverter" required="true"
+										requiredMessage="obrigatório selecionar o grupo do Exame">
+										<f:selectItem noSelectionOption="true" itemValue="0"
+											itemLabel="Selecione um Grupo" />
+										<f:selectItems value="#{confirmacaoBean.agendasUnicas}"
+											var="grupos1" itemValue="#{grupos1.codigo}"
+											itemLabel="#{grupos1.descricao}" />
+										<p:ajax update="prof" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+							<div class="form-group">
+								<p:outputLabel value="Profissional: "
+									styleClass="control-label col-sm-2" />
+								<div class="col-sm-10">
+									<p:selectOneMenu id="prof" filter="true"
+										value="#{confirmacaoBean.cpf_profissional}"
+										converter="omnifaces.SelectItemsConverter" required="true"
+										requiredMessage="obrigatório selecionar um Profissional">
+										<f:selectItem noSelectionOption="true"
+											itemLabel="Selecione um Profissional" />
+										<f:selectItems
+											value="#{confirmacaoBean.listaProfissionalAgenda}"
+											var="profs" itemValue="#{profs.cpf}"
+											itemLabel="#{profs.nome}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<p:commandButton id="btnGrade" value="Pesquisar"
+										actionListener="#{confirmacaoBean.inicializarGrade}"
+										update=":formCadastro :mensagem" styleClass="btn btn-default" />
+								</div>
+							</div>
+							<p:blockUI block="formCadastro" trigger="btnGrade">
+								<p:graphicImage value="/resources/img/pesquisando.gif"
+									width="350px" height="250px" />
+							</p:blockUI>
+							<hr />
+							<p:schedule value="#{confirmacaoBean.consultas}" locale="pt"
+								draggable="false" aspectRatio="2" centerHeaderTemplate="title"
+								timeFormat="HH:mm" slotMinutes="10" firstHour="7" tooltip="true"
+								showWeekends="true" axisFormat="HH:mm" timeZone="GMT-3"
+								allDaySlot="false" resizable="false" widgetVar="myschedule"
+								view="agendaDay">
+								<p:ajax event="eventSelect"
+									listener="#{confirmacaoBean.onEventSelect}"
+									update="eventDetails" oncomplete="PF('eventDialog').show();" />
+							</p:schedule>
+
+							<p:dialog widgetVar="eventDialog" header="Consulta"
+								showEffect="clip" hideEffect="clip" width="400" modal="true">
+
+								<p:panelGrid id="eventDetails" columns="1" style="width: 380px;"	>
+									<f:facet name="header">
+										Paciente
+										</f:facet>
+
+									<p:outputLabel id="paciente"
+										value="#{confirmacaoBean.evt.title}" />
+
+									<f:facet name="footer">
+										Confirma realização? 
+									</f:facet>
+								</p:panelGrid>
+							</p:dialog>
+
+						</h:form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<script type="text/javascript">
+    PrimeFaces.locales['pt'] = {
+        closeText: 'Fechar',
+        prevText: 'Anterior',
+        nextText: 'Próximo',
+        currentText: 'Começo',
+        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+            'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun',
+            'Jul','Ago','Set','Out','Nov','Dez'],
+        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+        dayNamesMin: ['D','S','T','Q','Q','S','S'],
+        weekHeader: 'Semana',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        timeOnlyTitle: 'Só Horas',
+        timeText: 'Tempo',
+        hourText: 'Hora',
+        minuteText: 'Minuto',
+        secondText: 'Segundo',
+        currentText: 'Hoje',
+        month: 'Mês',
+        week: 'Semana',
+        day: 'Dia',
+        allDayText : 'Todo Dia'
+    };
+</script>
+
+		<style type="text/css">
+.value {
+	width: 1000px;
+}
+
+.emp1 .fc-content {
+	background: #006600;
+}
+
+.emp2 .fc-content {
+	background-color: yellow;
+	border-color: yellow;
+	color: black;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.emp3 .fc-content {
+	background-color: red;
+	border-color: red;
+	color: white;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.column1Class {
+	width: 30%;
+}
+
+.column2Class {
+	width: 70%;
+}
+</style>
+	</ui:define>
+</ui:composition>
+</html>
+
